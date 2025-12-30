@@ -24,8 +24,7 @@ namespace Shika {
           } 
        
        public : 
-          // Static Helper
-
+          // --- Static Helper ---
           // Return Identity Matrix
           static Matrix4x4 Identity() {
             Matrix4x4 mat;
@@ -65,6 +64,57 @@ namespace Shika {
             result.row[3] = MulRow(row[3], other);
             return result;
           }
+
+          // --- Transformaiton Matrices ---
+          // Translation Matrices
+          static Matrix4x4 Translation(const Vector3& translation) {
+            Matrix4x4 mat = Identity();
+            mat.row[3] = _mm_set_ps(1.0f, translation.z, translation.y, translation.x);
+            return mat;
+          }
+          // Scaling Matricies
+          static Matrix4x4 Scaling(const Vector3& scaling) {
+            Matrix4x4 mat;
+            mat.row[0] = _mm_set_ps(0, 0, 0, scaling.x);
+            mat.row[1] = _mm_set_ps(0, 0, scaling.y, 0);
+            mat.row[2] = _mm_set_ps(0, scaling.z, 0, 0);
+            mat.row[3] = _mm_set_ps(1, 0, 0, 0);
+            return mat;
+          }
+          // Rotations around x-axis
+          static Matrix4x4 RotationX(float angleInRadian) {
+            Matrix4x4 mat;
+            float c = std::cos(angleInRadian);
+            float s = std::sin(angleInRadian);
+            mat.row[0] = _mm_set_ps(0, 0, 0, 1);
+            mat.row[1] = _mm_set_ps(0, -s, c, 0);
+            mat.row[2] = _mm_set_ps(0, c, s, 0);
+            mat.row[3] = _mm_set_ps(1, 0, 0, 0);
+            return mat;
+          }
+          // Rotations around y-axis
+          static Matrix4x4 RotationY(float angleInRadian) {
+            Matrix4x4 mat;
+            float c = std::cos(angleInRadian);
+            float s = std::sin(angleInRadian);
+            mat.row[0] = _mm_set_ps(0, s, 0, c);
+            mat.row[1] = _mm_set_ps(0, 0, 1, 0);
+            mat.row[2] = _mm_set_ps(0, c, 0, -s);
+            mat.row[3] = _mm_set_ps(1, 0, 0, 0);
+            return mat;
+          }
+          // Rotations around z-axis
+          static Matrix4x4 RotationZ(float angleInRadian) {
+            Matrix4x4 mat;
+            float c = std::cos(angleInRadian);
+            float s = std::sin(angleInRadian);
+            mat.row[0] = _mm_set_ps(0, 0, -s, c);
+            mat.row[1] = _mm_set_ps(0, 0, c, s);
+            mat.row[2] = _mm_set_ps(0, 1, 0, 0);
+            mat.row[3] = _mm_set_ps(1, 0, 0, 0);
+            return mat;
+          }
+        
 
 
     };

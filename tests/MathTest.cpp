@@ -116,6 +116,16 @@ int main() {
             printf("%.2f ", result.m[i][j]);
         printf("\n");
    }
+
+   printf("\n=== Matrix Translation Test ===\n");
+   Matrix4x4 matT;
+   matT = Matrix4x4::Translation(Vector3(10, 0, 0));
+   printf("[ Translation Matrices(10, 0, 0) ]\n");
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++)
+            printf("%.2f ", matT.m[i][j]);
+        printf("\n");
+    }
     
 
     return 0;
