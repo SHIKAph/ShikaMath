@@ -15,7 +15,7 @@ namespace Shika {
           };
 
        public : 
-          // 1. Basic Constructor
+          // --- Basic Constructor ---
           Matrix4x4() {
             row[0] = _mm_setzero_ps();
             row[1] = _mm_setzero_ps();
@@ -115,7 +115,46 @@ namespace Shika {
             return mat;
           }
         
+       public :
+          // --- View&Projection ---
+          // View Matrix (Left-Handed)
+          static Matrix4x4 LookAtLH(const Vector3& eye, const Vector3& focus, const Vector3& up) {
+            Vector3 f = (focus-eye).Normalized(); // Forward
+            Vector3 r = up.Cross(f).Normalized(); // Right
+            Vector3 u = f.Cross(r); // Up
 
+            Matrix4x4 mat;
+            // First Row (Right)
+            mat.row[0] = _mm_set_ps(0, f.x, u.x, r.x);
+            // Second Row (Up)
+            mat.row[1] = _mm_set_ps(0, f.y, u.y, r.y);
+            // Third Row (Forward)
+            mat.row[2] = _mm_set_ps(0, f.z, u.z, r.z);
+            // Fourth Row (Position)
+            float valX = -r.Dot(eye);
+            float valY = -u.Dot(eye);
+            float valZ = -f.Dot(eye);
+            mat.row[3] = _mm_set_ps(1, valZ, valY, valX);
+
+            return mat;
+          }
+          // Projection Matrix (Left-Handed)
+          // range : Z [0, 1] for DirectX
+          static Matrix4x4 PerspectiveFovLH(float fovAngleY, float aspectRatio, float nearZ, float farZ) {
+            Matrix4x4 mat;
+
+            float rad = fovAngleY;
+            float h = 1.0f / std::tan(rad / 2.0f); // Cotangent
+            float w = h / aspectRatio;
+            float q = farZ / (farZ - nearZ);
+
+            mat.row[0] = _mm_set_ps(0, 0, 0, w);
+            mat.row[1] = _mm_set_ps(0, 0, h, 0);
+            mat.row[2] = _mm_set_ps(1, q, 0, 0);
+            mat.row[3] = _mm_set_ps(0, -q * nearZ, 0, 0);
+
+            return mat;
+          }
 
     };
 }

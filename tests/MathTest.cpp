@@ -90,7 +90,7 @@ int main() {
         printf("\n");
     }
 
-*/
+
    printf("\n=== Matrix Multiplication Test ===\n");
    Matrix4x4 mat1;
    mat1 = Matrix4x4::Identity();
@@ -127,6 +127,34 @@ int main() {
         printf("\n");
     }
     
+*/
+    printf("\n=== View Matrix Test ===\n");
+    Matrix4x4 matV;
+    matV = Matrix4x4::LookAtLH(Vector3(0.0f, 0.0f, -5.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
+    Matrix4x4 matT;
+    matT = Matrix4x4::Translation(Vector3(0.0f, 0.0f, 5.0f));
+    printf("[ View Matrices ]\n");
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++)
+            printf("%.2f ", matV.m[i][j]);
+        printf("\n");
+    }
+    printf("[ Translation Matrices ]\n");
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++)
+            printf("%.2f ", matT.m[i][j]);
+        printf("\n");
+    }
+
+    printf("\n=== Perspective Matrix Test ===\n");
+    Matrix4x4 matP;
+    matP = Matrix4x4::PerspectiveFovLH(ToRadian(90.0f), 1.0f, 1.0f, 10.0f);
+    printf("[ Perspective Matrices ]\n");
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++)
+            printf("%.2f ", matP.m[i][j]);
+        printf("\n");
+    }
 
     return 0;
 }
