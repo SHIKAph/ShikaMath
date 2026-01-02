@@ -127,7 +127,7 @@ int main() {
         printf("\n");
     }
     
-*/
+
     printf("\n=== View Matrix Test ===\n");
     Matrix4x4 matV;
     matV = Matrix4x4::LookAtLH(Vector3(0.0f, 0.0f, -5.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
@@ -155,6 +155,20 @@ int main() {
             printf("%.2f ", matP.m[i][j]);
         printf("\n");
     }
+
+*/
+    printf("\n=== Reflection Matrix Test ===\n");
+
+    Vector3 floorNormal(0, 1, 0);
+    float d = 0.0f;
+    Matrix4x4 reflectMat = Matrix4x4::Reflection(floorNormal, d);
+
+    Vector3 originalPos(0, 5, 0);
+
+    Vector3 reflectedPos = Matrix4x4::TransformPoint(originalPos, reflectMat);
+
+    printf("Original: %.1f, %.1f, %.1f\n", originalPos.x, originalPos.y, originalPos.z);
+    printf("Reflected: %.1f, %.1f, %.1f\n", reflectedPos.x, reflectedPos.y, reflectedPos.z);
 
     return 0;
 }

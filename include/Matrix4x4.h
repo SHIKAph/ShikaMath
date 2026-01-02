@@ -37,6 +37,23 @@ namespace Shika {
             return mat;
           }
 
+          // Return Point (Vector3)
+          static Vector3 TransformPoint(const Vector3& v, const Matrix4x4& mat) {
+            __m128 x = _mm_set1_ps(v.x); // [x, x, x, x]
+            __m128 y = _mm_set1_ps(v.y); // [y, y, y, y]
+            __m128 z = _mm_set1_ps(v.z); // [z, z, z, z]
+            __m128 w = _mm_set1_ps(1.0f); // [1, 1, 1, 1]
+
+            // Linear Combination
+            // Result = x*Row0 + y*Row1 + z*Row2 + 1*Row3
+            __m128 r = _mm_mul_ps(x, mat.row[0]);
+            r = _mm_add_ps(r, _mm_mul_ps(y, mat.row[1]));
+            r = _mm_add_ps(r, _mm_mul_ps(z, mat.row[2]));
+            r = _mm_add_ps(r, _mm_mul_ps(w, mat.row[3])); 
+
+            return Vector3(r);
+        }
+
        private : 
           // Helper for Multiplication One Row
           inline __m128 MulRow(__m128 rowVec, const Matrix4x4 other) const{
@@ -155,6 +172,23 @@ namespace Shika {
 
             return mat;
           }
+
+          // Reflection Matrix 
+          static Matrix4x4 Reflection(const Vector3& normal, float d){
+
+            Vector3 n = normal.Normalized();
+            float x = n.x; float y = n.y; float z = n.z;
+
+            Matrix4x4 mat;
+
+            mat.row[0] = _mm_set_ps(0, -2*x*z, -2*x*y, 1 - 2*x*x);
+            mat.row[1] = _mm_set_ps(0, -2*y*z, 1 - 2*y*y, -2*y*x);
+            mat.row[2] = _mm_set_ps(0, 1 - 2*z*z, -2*z*y, -2*z*x);
+            mat.row[3] = _mm_set_ps(1, -2*d*z, -2*d*y, -2*d*x);
+
+            return mat;
+          
+        }
 
     };
 }
