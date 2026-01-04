@@ -10,6 +10,41 @@ using namespace Shika;
 
 struct Point2D { int x, y; };
 
+inline float EdgeFunction(const Vector3& v0, const Vector3& v1, const Vector3& p) {
+    return (p.x - v0.x) * (v1.y - v0.y) - (p.y - v0.y) * (v1.x - v0.x);
+}
+
+void DrawFilledTriangle(Canvas& canvas, const Vector3& v0, const Vector3& v1, const Vector3& v2, Color color) {
+    // Calculate Bounding Box
+    int minX = (int)std::floor(std::min({v0.x, v1.x, v2.x}));
+    int minY = (int)std::floor(std::min({v0.y, v1.y, v2.y}));
+    int maxX = (int)std::ceil(std::max({v0.x, v1.x, v2.x}));
+    int maxY = (int)std::ceil(std::max({v0.y, v1.y, v2.y}));
+
+    // Clipping
+    minX = std::max(minX, 0);
+    minY = std::max(minY, 0);
+    maxX = std::min(maxX, canvas.GetWidth() - 1);
+    maxY = std::min(maxY, canvas.GetHeight() - 1);
+
+    for (int y = minY; y <= maxY; y++) {
+        for (int x = minX; x <= maxX; x++) {
+            // Miidle point of Pixel (+0.5f)
+            Vector3 p((float)x + 0.5f, (float)y + 0.5f, 0.0f);
+
+            // Edge Function Test about 3 sides
+            float w0 = EdgeFunction(v1, v2, p); // v1 -> v2 
+            float w1 = EdgeFunction(v2, v0, p); // v2 -> v0 
+            float w2 = EdgeFunction(v0, v1, p); // v0 -> v1 
+
+            // Put Pixef if pass Edge Test
+            if (w0 <= 0 && w1 <= 0 && w2 <= 0) {
+                canvas.PutPixel(x, y, color);
+            }
+        }
+    }
+}
+
 void DrawLine(Canvas& canvas, Point2D p1, Point2D p2, Color color) {
     int x0 = p1.x; int y0 = p1.y;
     int x1 = p2.x; int y1 = p2.y;
@@ -29,189 +64,6 @@ void DrawLine(Canvas& canvas, Point2D p1, Point2D p2, Color color) {
 
 int main() {
 
-/*
-    printf("=== Memory Alignment Test ===\n");
-    printf("Size of Vector3: %zu bytes (Expected: 16)\n", sizeof(Vector3));
-    
-
-    static_assert(sizeof(Vector3) == 16, "Vector3 size must be 16 bytes!");
-    static_assert(alignof(Vector3) == 16, "Vector3 alignment must be 16 bytes!");
-
-
-    Vector3 vec;
-    size_t address = reinterpret_cast<size_t>(&vec);
-    printf("Address of vec: 0x%zX\n", address);
-    
-    if (address % 16 == 0) {
-        printf("[PASS] Memory is 16-byte aligned.\n");
-    } else {
-        printf("[FAIL] Memory is NOT aligned! Check ALIGN16 macro.\n");
-        return -1;
-    }
-
-
-    printf("\n=== Union & Constructor Test ===\n");
-    Vector3 v1(1.0f, 2.0f, 3.0f);
-    
-    printf("Input: (1.0, 2.0, 3.0)\n");
-    printf("Stored: x=%.1f, y=%.1f, z=%.1f\n", v1.x, v1.y, v1.z);
-    
-    if (v1.x == 1.0f && v1.y == 2.0f && v1.z == 3.0f) {
-        printf("[PASS] Constructor & Union work correctly.\n");
-    } else {
-        printf("[FAIL] Values are corrupted. Check _mm_set_ps order.\n");
-    }
-
-    printf("\n=== Add, Sub Operator Test ===\n");
-    Vector3 a(1.0f, 2.0f, 3.0f);
-    Vector3 b(4.0f, 5.0f, 6.0f);
-    Vector3 c = a + b;
-
-    printf("Vector3 c stored x=%.1f, y=%.1f, z=%.1f\n", c.x, c.y, c.z);
-
-
-    printf("\n=== Multiplication Operator Test ===\n");
-    Vector3 Vcw(2.0f, 0.0f, 1.0f);
-    Vector3 scalar = a * 2.0f;
-    Vector3 component = a * Vcw; 
-
-    printf("Vector3 scalar stored x=%.1f, y=%.1f, z=%.1f\n", scalar.x, scalar.y, scalar.z);
-    printf("Vector3 component stored x=%.1f, y=%.1f, z=%.1f\n", component.x, component.y, component.z);
-
-
-    printf("\n=== Dot Product and Normalize Test ===\n");
-    Vector3 d1(1.0f, 0.0f, 0.0f);
-    Vector3 d2(0.0f, 1.0f, 0.0f);
-    float dot = d1.Dot(d2);
-    printf("Dot Product of (1.0f, 0.0f, 0.0f) and (0.0f, 1.0f, 0.0f): %.2f\n", dot);
-    dot = d1.Dot(d1);
-    printf("Dot Product of (1.0f, 0.0f, 0.0f) and (1.0f, 0.0f, 0.0f): %.2f\n", dot);
-    Vector3 vLen(3.0f, 4.0f, 0.0f);
-    float length = vLen.Length();
-    printf("Length of (3.0f, 4.0f, 0.0f): %.2f \n", length);
-    Vector3 norm = vLen * (1.0f / length);
-    printf("Normalized Vector(3.0f, 4.0f, 0.0f): x=%.2f, y=%.2f, z=%.2f\n", norm.x, norm.y, norm.z);
-
-    printf("\n=== Cross Product Test ===\n");
-    Vector3 Xaxis(1.0f, 0.0f, 0.0f);
-    Vector3 Yaxis(0.0f, 1.0f, 0.0f);
-    Vector3 Zaxis = Xaxis.Cross(Yaxis);
-    Vector3 Zaxis_n = Yaxis.Cross(Xaxis);
-    printf("Cross Product of Xaxis and Yaxis: x=%.2f, y=%.2f, z=%.2f\n", Zaxis.x, Zaxis.y, Zaxis.z);
-    printf("Cross Product of Yaxis and Xaxis: x=%.2f, y=%.2f, z=%.2f\n", Zaxis_n.x, Zaxis_n.y, Zaxis_n.z);
-
-
-    printf("\n=== Matrix4x4 first Test ===\n");
-    Matrix4x4 mat1;
-    printf("Size of Matrix4x4 is %.2ld\n", sizeof(Matrix4x4));
-    mat1 = Matrix4x4::Identity();
-    printf("[ Identity Matrix ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", mat1.m[i][j]);
-        printf("\n");
-    }
-
-
-   printf("\n=== Matrix Multiplication Test ===\n");
-   Matrix4x4 mat1;
-   mat1 = Matrix4x4::Identity();
-   printf("[ Identity Matrix * Identity Matrix ]\n");
-   mat1 = mat1*mat1;
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", mat1.m[i][j]);
-        printf("\n");
-    }
-
-   Matrix4x4 mata, matb;
-   for(int i=0; i<4; i++){
-    mata.row[i] = _mm_set_ps(1, 1, 1, 1);
-   }
-   for(int i=0; i<4; i++){
-    matb.row[i] = _mm_set_ps(2, 2, 2, 2);
-   }
-   printf("[ 1.0 Matrix * 2.0 Matrix ]\n");
-   Matrix4x4 result = mata*matb;
-   for(int i=0; i<4; i++){
-       for(int j=0; j<4; j++)
-            printf("%.2f ", result.m[i][j]);
-        printf("\n");
-   }
-
-   printf("\n=== Matrix Translation Test ===\n");
-   Matrix4x4 matT;
-   matT = Matrix4x4::Translation(Vector3(10, 0, 0));
-   printf("[ Translation Matrices(10, 0, 0) ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matT.m[i][j]);
-        printf("\n");
-    }
-    
-
-    printf("\n=== View Matrix Test ===\n");
-    Matrix4x4 matV;
-    matV = Matrix4x4::LookAtLH(Vector3(0.0f, 0.0f, -5.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
-    Matrix4x4 matT;
-    matT = Matrix4x4::Translation(Vector3(0.0f, 0.0f, 5.0f));
-    printf("[ View Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matV.m[i][j]);
-        printf("\n");
-    }
-    printf("[ Translation Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matT.m[i][j]);
-        printf("\n");
-    }
-
-    printf("\n=== Perspective Matrix Test ===\n");
-    Matrix4x4 matP;
-    matP = Matrix4x4::PerspectiveFovLH(ToRadian(90.0f), 1.0f, 1.0f, 10.0f);
-    printf("[ Perspective Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matP.m[i][j]);
-        printf("\n");
-    }
-
-
-    printf("\n=== Reflection Matrix Test ===\n");
-
-    Vector3 floorNormal(0, 1, 0);
-    float d = 0.0f;
-    Matrix4x4 reflectMat = Matrix4x4::Reflection(floorNormal, d);
-
-    Vector3 originalPos(0, 5, 0);
-
-    Vector3 reflectedPos = Matrix4x4::TransformPoint(originalPos, reflectMat);
-
-    printf("Original: %.1f, %.1f, %.1f\n", originalPos.x, originalPos.y, originalPos.z);
-    printf("Reflected: %.1f, %.1f, %.1f\n", reflectedPos.x, reflectedPos.y, reflectedPos.z);
-
-    // --- Canvas.h Test ---
-    int width = 400;
-    int height = 300;
-    Canvas canvas(width, height);
-
-    for(int y = 0; y < height; y++){
-        for(int x = 0; x < width; x++){
-            // Normalization
-            float u = (float)x / (width - 1);
-            float v = (float)y / (height - 1);
-
-            Color color = { u, v, 0.2f};
-
-            canvas.PutPixel(x, y, color);
-        }
-    }
-
-    canvas.SaveToPPM("output.ppm");
-
-*/ 
     const int width = 400;
     const int height = 300;
     Canvas canvas(width, height);
@@ -265,11 +117,13 @@ int main() {
     }
 
     // Draw (Rasterization)
-    DrawLine(canvas, screenPoints[0], screenPoints[1], Color::White());
-    DrawLine(canvas, screenPoints[1], screenPoints[2], Color::White());
-    DrawLine(canvas, screenPoints[2], screenPoints[0], Color::White());
+    Vector3 p0(screenPoints[0].x, screenPoints[0].y, 0.0f);
+    Vector3 p1(screenPoints[1].x, screenPoints[1].y, 0.0f);
+    Vector3 p2(screenPoints[2].x, screenPoints[2].y, 0.0f);
+    
+    DrawFilledTriangle(canvas, p0, p1, p2, Color::Red());
 
-    canvas.SaveToPPM("triangle.ppm");
+    canvas.SaveToPPM("solid_triangle.ppm");
 
     return 0;
 }

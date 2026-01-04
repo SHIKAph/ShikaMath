@@ -74,7 +74,7 @@ namespace Shika {
            }
 
            int GetWidth() const {return width; }
-           int Getheight() const {return height; }
+           int GetHeight() const {return height; }
 
     };
 }
