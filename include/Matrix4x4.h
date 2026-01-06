@@ -68,6 +68,21 @@ namespace Shika {
             return r;
         }
 
+        static __m128 TransformDirection(const Vector3& v, const Matrix4x4& mat) {
+           __m128 x = _mm_set1_ps(v.x);
+           __m128 y = _mm_set1_ps(v.y);
+           __m128 z = _mm_set1_ps(v.z);
+           // w = 0
+    
+           __m128 r = _mm_mul_ps(x, mat.row[0]);
+           r = _mm_add_ps(r, _mm_mul_ps(y, mat.row[1]));
+           r = _mm_add_ps(r, _mm_mul_ps(z, mat.row[2]));
+           // Not add row[3] (Translation)
+    
+           return r;
+        }
+
+
        private : 
           // Helper for Multiplication One Row
           inline __m128 MulRow(__m128 rowVec, const Matrix4x4 other) const{
