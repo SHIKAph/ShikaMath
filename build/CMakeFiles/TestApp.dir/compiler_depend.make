@@ -330,6 +330,8 @@ CMakeFiles/TestApp.dir/tests/MathTest.cpp.o: /workspaces/ShikaMath/tests/MathTes
   /usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveoptintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavesintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h \
+  /workspaces/ShikaMath/include/Mesh.h \
+  /workspaces/ShikaMath/include/Rasterizer.h \
   /workspaces/ShikaMath/include/Canvas.h \
   /workspaces/ShikaMath/include/Common.h \
   /workspaces/ShikaMath/include/Matrix4x4.h \
@@ -339,6 +341,8 @@ CMakeFiles/TestApp.dir/tests/MathTest.cpp.o: /workspaces/ShikaMath/tests/MathTes
 /workspaces/ShikaMath/include/Vector3.h:
 
 /workspaces/ShikaMath/include/Matrix4x4.h:
+
+/workspaces/ShikaMath/include/Rasterizer.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h:
 
@@ -543,6 +547,8 @@ CMakeFiles/TestApp.dir/tests/MathTest.cpp.o: /workspaces/ShikaMath/tests/MathTes
 /usr/include/c++/13/bits/stl_pair.h:
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/workspaces/ShikaMath/include/Mesh.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/amxcomplexintrin.h:
 

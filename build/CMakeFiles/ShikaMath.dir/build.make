@@ -83,17 +83,33 @@ CMakeFiles/ShikaMath.dir/src/Vector3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ShikaMath.dir/src/Vector3.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/ShikaMath/src/Vector3.cpp -o CMakeFiles/ShikaMath.dir/src/Vector3.cpp.s
 
+CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o: CMakeFiles/ShikaMath.dir/flags.make
+CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o: /workspaces/ShikaMath/src/Rasterizer.cpp
+CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o: CMakeFiles/ShikaMath.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o -MF CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o.d -o CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o -c /workspaces/ShikaMath/src/Rasterizer.cpp
+
+CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/ShikaMath/src/Rasterizer.cpp > CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.i
+
+CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/ShikaMath/src/Rasterizer.cpp -o CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.s
+
 # Object files for target ShikaMath
 ShikaMath_OBJECTS = \
-"CMakeFiles/ShikaMath.dir/src/Vector3.cpp.o"
+"CMakeFiles/ShikaMath.dir/src/Vector3.cpp.o" \
+"CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o"
 
 # External object files for target ShikaMath
 ShikaMath_EXTERNAL_OBJECTS =
 
 libShikaMath.a: CMakeFiles/ShikaMath.dir/src/Vector3.cpp.o
+libShikaMath.a: CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o
 libShikaMath.a: CMakeFiles/ShikaMath.dir/build.make
 libShikaMath.a: CMakeFiles/ShikaMath.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libShikaMath.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libShikaMath.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/ShikaMath.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ShikaMath.dir/link.txt --verbose=$(VERBOSE)
 

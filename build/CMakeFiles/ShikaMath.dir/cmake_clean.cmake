@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o"
+  "CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o.d"
   "CMakeFiles/ShikaMath.dir/src/Vector3.cpp.o"
   "CMakeFiles/ShikaMath.dir/src/Vector3.cpp.o.d"
   "libShikaMath.a"

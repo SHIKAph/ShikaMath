@@ -11,6 +11,7 @@ set(SOURCE_FILES
     include/Common.h
     include/Vector3.h
     src/Vector3.cpp
+    src/Rasterizer.cpp
 )
 
 add_library(ShikaMath STATIC ${SOURCE_FILES})

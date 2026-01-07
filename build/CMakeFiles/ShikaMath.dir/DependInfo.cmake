@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/workspaces/ShikaMath/src/Rasterizer.cpp" "CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o" "gcc" "CMakeFiles/ShikaMath.dir/src/Rasterizer.cpp.o.d"
   "/workspaces/ShikaMath/src/Vector3.cpp" "CMakeFiles/ShikaMath.dir/src/Vector3.cpp.o" "gcc" "CMakeFiles/ShikaMath.dir/src/Vector3.cpp.o.d"
   )
 

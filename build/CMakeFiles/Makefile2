@@ -83,12 +83,12 @@ clean: CMakeFiles/TestApp.dir/clean
 CMakeFiles/ShikaMath.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ShikaMath.dir/build.make CMakeFiles/ShikaMath.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ShikaMath.dir/build.make CMakeFiles/ShikaMath.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=1,2 "Built target ShikaMath"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=1,2,3 "Built target ShikaMath"
 .PHONY : CMakeFiles/ShikaMath.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ShikaMath.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/ShikaMath/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/ShikaMath/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ShikaMath.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/ShikaMath/build/CMakeFiles 0
 .PHONY : CMakeFiles/ShikaMath.dir/rule
@@ -109,12 +109,12 @@ CMakeFiles/ShikaMath.dir/clean:
 CMakeFiles/TestApp.dir/all: CMakeFiles/ShikaMath.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TestApp.dir/build.make CMakeFiles/TestApp.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TestApp.dir/build.make CMakeFiles/TestApp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=3,4 "Built target TestApp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=4,5 "Built target TestApp"
 .PHONY : CMakeFiles/TestApp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/TestApp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/ShikaMath/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/ShikaMath/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/TestApp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/ShikaMath/build/CMakeFiles 0
 .PHONY : CMakeFiles/TestApp.dir/rule
