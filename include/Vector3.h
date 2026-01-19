@@ -31,11 +31,11 @@ namespace Shika {
       public : 
          // Operator Overloading
          // Add operator
-         Vector3 operator+(const Vector3& other) const {
+         Vector3 operator+(Vector3 other) const {
             return Vector3( _mm_add_ps(v, other.v) );
          }
          // Sub operator
-         Vector3 operator-(const Vector3& other) const {
+         Vector3 operator-(Vector3 other) const {
             return Vector3( _mm_sub_ps(v, other.v) );
          }
          // Scalar Multiplication operator (*Scalar)
@@ -44,7 +44,7 @@ namespace Shika {
             return Vector3( _mm_mul_ps(v, s) );
          }
          // Component-wise Multiplication operator (*Vector3)
-         Vector3 operator*(const Vector3& other) const {
+         Vector3 operator*(Vector3 other) const {
             return Vector3( _mm_mul_ps(v, other.v) );
          }
  
@@ -58,7 +58,7 @@ namespace Shika {
       public : 
          // Vector Geometry Functions
          // Dot Product
-         float Dot(const Vector3& other) const {
+         float Dot(Vector3 other) const {
             __m128 mul = _mm_dp_ps(v, other.v, 0x7F);
             return _mm_cvtss_f32(mul);
          }
@@ -89,7 +89,7 @@ namespace Shika {
          }
 
          // Cross Product
-         Vector3 Cross(const Vector3& other) const {
+         Vector3 Cross(Vector3 other) const {
             
             __m128 a_yzx = _mm_shuffle_ps(v, v, _MM_SHUFFLE(3, 0, 2, 1));
             __m128 a_zxy = _mm_shuffle_ps(v, v, _MM_SHUFFLE(3, 1, 0, 2));
