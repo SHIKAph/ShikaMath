@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/workspaces/ShikaMath/tests/Benchmark.cpp" "CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o" "gcc" "CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o.d"
+  "/workspaces/ShikaMath/tests/MathTest.cpp" "CMakeFiles/TestApp.dir/tests/MathTest.cpp.o" "gcc" "CMakeFiles/TestApp.dir/tests/MathTest.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -1,85 +1,80 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
+#include <cmath>
 #include <immintrin.h>
 
-// Simple Quaternion struct
-struct Quaternion {
-    float x, y, z, w;
+#ifdef _MSC_VER
+    #define NO_INLINE __declspec(noinline)
+#else
+    #define NO_INLINE __attribute__((noinline))
+#endif
 
-    Quaternion() : x(0.0f), y(0.0f), z(0.0f), w(1.0f) {}
-    Quaternion(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {} 
-    
+// Simple Vector3 struct
+struct alignas(16) Vector3 {
+    __m128 v;
+
+    Vector3() : v(_mm_setzero_ps()) {}
+    Vector3(float x, float y, float z) : v(_mm_set_ps(0, z, y, x)) {}
+    Vector3(__m128 _v) : v(_v) {}
 };
 
 // ---------------------------------------------------------
+NO_INLINE Vector3 Normalize_Previous(Vector3 vec) {
+    // 1. LengthSq (Dot self)
+    __m128 dp = _mm_dp_ps(vec.v, vec.v, 0x7F);
+    // 2. Sqrt 
+    __m128 len = _mm_sqrt_ps(dp);
+    // 3. Division 
+    return Vector3(_mm_div_ps(vec.v, len));
+}
 
-// 1. Call by Reference(const)
-Quaternion Mul_ByRef (const Quaternion& a, const Quaternion& b) {
-            return Quaternion(
-                a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
-                a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
-                a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w,
-                a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
-            );
-        }
-
-// 2. Call by Value 
-Quaternion Mul_ByVal (Quaternion a, Quaternion b) {
-            return Quaternion(
-                a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
-                a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
-                a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w,
-                a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
-            );
-        }
-
+NO_INLINE Vector3 Normalize_Current(Vector3 vec) {
+    // 1. LengthSq
+    __m128 dp = _mm_dp_ps(vec.v, vec.v, 0x7F);
+    // 2. RSqrt
+    __m128 rsqrt = _mm_rsqrt_ps(dp);
+    // 3. Multiply 
+    return Vector3(_mm_mul_ps(vec.v, rsqrt));
+}
 // ---------------------------------------------------------
 
 int main() {
-    const int ITERATIONS = 100'000'000; 
+    const int ITERATIONS = 50'000'000; 
     
-    Quaternion q1(1.0f, 2.0f, 3.0f, 4.0f);
-    Quaternion q2(5.0f, 6.0f, 7.0f, 8.0f);
+    Vector3 v1(10.0f, 20.0f, 30.0f);
+    Vector3 v2(1.0f, 2.0f, 3.0f);
     
     volatile float prevent_opt = 0.0f; 
 
-    std::cout << "=== Quaternion Passing Benchmark (Iterations: " << ITERATIONS << ") ===\n\n";
+    std::cout << "=== Normalize Performance Test ===" << std::endl;
 
-    // 1. Reference Test
+    // Now
     {
         auto start = std::chrono::high_resolution_clock::now();
-        
-        Quaternion result;
-        for (int i = 0; i < ITERATIONS; ++i) {
-            result = Mul_ByRef(q1, q2); 
+        Vector3 res;
+        for(int i=0; i<ITERATIONS; ++i) {
+            res = Normalize_Previous(v1);
         }
-        
         auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> elapsed = end - start;
+        std::chrono::duration<double, std::milli> ms = end - start;
+        std::cout << "Previous (sqrt + div) : " << ms.count() << " ms" << std::endl;
         
-        float* f = (float*)&result;
-        prevent_opt = f[0]; 
-
-        std::cout << "[1] Const Reference : " << elapsed.count() << " ms" << std::endl;
+        float* f = (float*)&res; prevent_opt = f[0];
     }
 
-    // 2. Value Test
+    // Changed
     {
         auto start = std::chrono::high_resolution_clock::now();
-        
-        Quaternion result;
-        for (int i = 0; i < ITERATIONS; ++i) {
-            result = Mul_ByVal(q1, q2);
+        Vector3 res;
+        for(int i=0; i<ITERATIONS; ++i) {
+            res = Normalize_Current(v1);
         }
-        
         auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> elapsed = end - start;
-        
-        float* f = (float*)&result;
-        prevent_opt = f[0];
+        std::chrono::duration<double, std::milli> ms = end - start;
+        std::cout << "Current (rsqrt + mul)     : " << ms.count() << " ms" << std::endl;
 
-        std::cout << "[2] Call by Value   : " << elapsed.count() << " ms" << std::endl;
+        float* f = (float*)&res; prevent_opt = f[0];
     }
 
 

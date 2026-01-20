@@ -23,7 +23,7 @@ else()
     target_compile_options(ShikaMath PRIVATE -mavx -mfma)
 endif()
 
-add_executable(TestApp tests/Benchmark.cpp)
+add_executable(TestApp tests/MathTest.cpp)
 
 target_link_libraries(TestApp PRIVATE ShikaMath)
 

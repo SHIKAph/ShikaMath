@@ -69,28 +69,28 @@ include CMakeFiles/TestApp.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/TestApp.dir/flags.make
 
-CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o: CMakeFiles/TestApp.dir/flags.make
-CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o: /workspaces/ShikaMath/tests/Benchmark.cpp
-CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o: CMakeFiles/TestApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o -MF CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o.d -o CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o -c /workspaces/ShikaMath/tests/Benchmark.cpp
+CMakeFiles/TestApp.dir/tests/MathTest.cpp.o: CMakeFiles/TestApp.dir/flags.make
+CMakeFiles/TestApp.dir/tests/MathTest.cpp.o: /workspaces/ShikaMath/tests/MathTest.cpp
+CMakeFiles/TestApp.dir/tests/MathTest.cpp.o: CMakeFiles/TestApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/workspaces/ShikaMath/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/TestApp.dir/tests/MathTest.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TestApp.dir/tests/MathTest.cpp.o -MF CMakeFiles/TestApp.dir/tests/MathTest.cpp.o.d -o CMakeFiles/TestApp.dir/tests/MathTest.cpp.o -c /workspaces/ShikaMath/tests/MathTest.cpp
 
-CMakeFiles/TestApp.dir/tests/Benchmark.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TestApp.dir/tests/Benchmark.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/ShikaMath/tests/Benchmark.cpp > CMakeFiles/TestApp.dir/tests/Benchmark.cpp.i
+CMakeFiles/TestApp.dir/tests/MathTest.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TestApp.dir/tests/MathTest.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /workspaces/ShikaMath/tests/MathTest.cpp > CMakeFiles/TestApp.dir/tests/MathTest.cpp.i
 
-CMakeFiles/TestApp.dir/tests/Benchmark.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TestApp.dir/tests/Benchmark.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/ShikaMath/tests/Benchmark.cpp -o CMakeFiles/TestApp.dir/tests/Benchmark.cpp.s
+CMakeFiles/TestApp.dir/tests/MathTest.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TestApp.dir/tests/MathTest.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /workspaces/ShikaMath/tests/MathTest.cpp -o CMakeFiles/TestApp.dir/tests/MathTest.cpp.s
 
 # Object files for target TestApp
 TestApp_OBJECTS = \
-"CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o"
+"CMakeFiles/TestApp.dir/tests/MathTest.cpp.o"
 
 # External object files for target TestApp
 TestApp_EXTERNAL_OBJECTS =
 
-TestApp: CMakeFiles/TestApp.dir/tests/Benchmark.cpp.o
+TestApp: CMakeFiles/TestApp.dir/tests/MathTest.cpp.o
 TestApp: CMakeFiles/TestApp.dir/build.make
 TestApp: libShikaMath.a
 TestApp: CMakeFiles/TestApp.dir/link.txt

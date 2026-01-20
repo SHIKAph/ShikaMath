@@ -71,62 +71,14 @@ int main() {
     canvas.SaveToPPM("Orange_shaded.cube.ppm");
 */
 
-    printf("\n=== Left - Rigth Handed View Test ===\n");
-    Matrix4x4 matLV;
-    matLV = Matrix4x4::LookAtLH(Vector3(0.0f, 0.0f, -5.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
-    Matrix4x4 matRV;
-    matRV = Matrix4x4::LookAtRH(Vector3(0.0f, 0.0f, -5.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
-    printf("[ View(LH) Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matLV.m[i][j]);
-        printf("\n");
-    }
-    printf("[ View(RH) Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matRV.m[i][j]);
-        printf("\n");
-    }
+    printf("\n=== NormalizeFast Test ===\n");
+    Vector3 v1(3.0f, 4.0f, 0.0f);
 
-    printf("\n=== Left - Rigth Handed Perspective Test ===\n");
-    Matrix4x4 matLP;
-    matLP = Matrix4x4::PerspectiveFovLH(ToRadian(90.0f), 1.0f, 1.0f, 10.0f);
-    Matrix4x4 matRP;
-    matRP = Matrix4x4::PerspectiveFovRH_Vulkan(ToRadian(90.0f), 1.0f, 1.0f, 10.0f);
-    printf("[ Perspective(LH) Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matLP.m[i][j]);
-        printf("\n");
-    }
-    printf("[ Perspective(RH) Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matRP.m[i][j]);
-        printf("\n");
-    }
+    Vector3 norm = v1.Normalized();
+    Vector3 normFast = v1.NormalizedFast();
 
-    printf("\n=== Transpose Test ===\n");
-    Matrix4x4 matRow;
-    for(int i=0; i<4; i++)
-        for(int j=0; j<4; j+=2)
-            matRow.m[i][j] = 1.11;
-        
-    Matrix4x4 matCol;
-    matCol = matRow.Transposed();
-    printf("[ Row-Major Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matRow.m[i][j]);
-        printf("\n");
-    }
-    printf("[ Col-Major Matrices ]\n");
-    for(int i=0; i<4; i++){
-        for(int j=0; j<4; j++)
-            printf("%.2f ", matCol.m[i][j]);
-        printf("\n");
-    }
+    printf("Normalized Vector(3.0f, 4.0f, 0.0f): x=%.7f, y=%.7f, z=%.7f\n", norm.x, norm.y, norm.z);
+    printf("NormalizedFast Vector(3.0f, 4.0f, 0.0f): x=%.7f, y=%.7f, z=%.7f\n", normFast.x, normFast.y, normFast.z);
 
     return 0;
 }

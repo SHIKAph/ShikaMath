@@ -88,6 +88,21 @@ namespace Shika {
             return temp;
          }
 
+         // For Fast Normalize (Precision: ~0.03% error, No Zero Check)
+         void NormalizeFast() {
+            __m128 dp = _mm_dp_ps(v, v, 0xFF);
+
+            __m128 rsqrt = _mm_rsqrt_ps(dp);
+
+            v = _mm_mul_ps(v, rsqrt);
+         }
+
+         Vector3 NormalizedFast() const {
+            Vector3 temp = *this;
+            temp.NormalizeFast();
+            return temp;
+         }
+
          // Cross Product
          Vector3 Cross(Vector3 other) const {
             
